@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAccessToken, setAccessToken } from "./token";
-import { useRegister } from "../api/endpoints";
+import { useLogin, useRegister } from "../api/endpoints";
 
 
 export function useAuth(){
@@ -25,7 +25,7 @@ export function useAuth(){
     async function register(data: { email: string; password: string; name: string }) {
         try {
             const res = await registerMutation.mutateAsync(data);
-            // Если хотите — можно сразу залогинить пользователя, вызвав login с теми же данными
+            useLogin()
             // Или вернуть результат регистрации для дальнейшей обработки
             return res;
         } catch (error) {
