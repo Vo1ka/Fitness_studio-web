@@ -34,22 +34,58 @@ export default function LoginPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto p-4 space-y-4">
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="email" {...register("email")} className="input" />
-        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-      </div>
+    <>
+      <main className="min-h-[calc(100vh-8rem)] bg-[#FBF9D1] text-[#9A3F3F] flex flex-col items-center justify-center px-6 py-12">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bg-[#E6CFA9] rounded-lg shadow-lg p-10 w-full max-w-md"
+        >
+          <h1 className="text-3xl font-bold mb-8 text-center">Вход в аккаунт</h1>
 
-      <div>
-        <label htmlFor="password">Пароль</label>
-        <input id="password" type="password" {...register("password")} className="input" />
-        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
-      </div>
+          <div className="mb-6">
+            <label htmlFor="email" className="block mb-2 font-semibold">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              {...register("email")}
+              className={`w-full px-4 py-2 border rounded ${
+                errors.email ? "border-red-500" : "border-[#C1856D]"
+              } focus:outline-none focus:ring-2 focus:ring-[#9A3F3F]`}
+            />
+            {errors.email && (
+              <p className="mt-1 text-red-600 text-sm">{errors.email.message}</p>
+            )}
+          </div>
 
-      <button type="submit" disabled={isSubmitting || mutation.isPending} className="btn">
-        {isSubmitting || mutation.isPending ? "Вход..." : "Войти"}
-      </button>
-    </form>
+          <div className="mb-6">
+            <label htmlFor="password" className="block mb-2 font-semibold">
+              Пароль
+            </label>
+            <input
+              id="password"
+              type="password"
+              {...register("password")}
+              className={`w-full px-4 py-2 border rounded ${
+                errors.password ? "border-red-500" : "border-[#C1856D]"
+              } focus:outline-none focus:ring-2 focus:ring-[#9A3F3F]`}
+            />
+            {errors.password && (
+              <p className="mt-1 text-red-600 text-sm">{errors.password.message}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting || mutation.isPending}
+            className="w-full bg-[#9A3F3F] text-[#FBF9D1] py-3 rounded font-semibold hover:bg-[#C1856D] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSubmitting || mutation.isPending ? "Входим..." : "Войти"}
+          </button>
+        </form>
+      </main>
+    </>
   );
+
 }

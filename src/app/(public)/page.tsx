@@ -8,9 +8,9 @@ const HomePage = () => {
 
     return(
         <>
-        <Header />
-        <Main></Main>
-        <Footer></Footer>
+        <Main>
+            
+        </Main>
         </>
     )
 }

@@ -6,7 +6,6 @@ import Header from "@/components/Header/Header";
 export default function AboutPage() {
   return (
     <>
-    <Header />
     <main className="min-h-screen bg-[#FBF9D1] text-[#9A3F3F] px-8 py-12 max-w-5xl mx-auto">
       <h1 className="text-5xl font-extrabold mb-8 border-b-4 border-[#9A3F3F] pb-3 inline-block">
         О нас
@@ -40,7 +39,6 @@ export default function AboutPage() {
         </p>
       </section>
     </main>
-    <Footer></Footer>
     </>
   );
 }
