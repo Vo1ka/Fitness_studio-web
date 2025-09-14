@@ -5,7 +5,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/app/lib/auth/useAuth";
 import { useLogin, useRegister } from "@/app/lib/api/endpoints";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+
 export const registerSchema = z.object({
   email: z.string().email({ message: "Введите корректный email" }),
   password: z.string().min(8, { message: "Минимум 8 символов" }),
@@ -38,7 +39,7 @@ export default function RegisterPage() {
       });
 
       login(loginRes.accessToken); // сохраняем токен
-      router.push("/sessions");    // редирект в защищённый раздел
+      router.push("/bookings");    // редирект в защищённый раздел
     } catch (err: any) {
       alert(err.message || "Ошибка регистрации");
     }
@@ -46,27 +47,64 @@ export default function RegisterPage() {
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto p-4 space-y-4">
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="email" {...register("email")} className="input" />
-        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-w-md mx-auto p-8 space-y-6 bg-[#E6CFA9] rounded-lg shadow-lg"
+    >
+      <div className="flex flex-col">
+        <label
+          htmlFor="email"
+          className="mb-2 font-semibold text-[#9A3F3F] text-lg"
+        >
+          Email
+        </label>
+        <input
+          id="email"
+          type="email"
+          {...register("email")}
+          className={`px-4 py-3 rounded border transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#9A3F3F] ${
+            errors.email ? "border-red-500" : "border-[#C1856D]"
+          }`}
+          placeholder="example@mail.com"
+          autoComplete="email"
+        />
+        {errors.email && (
+          <p className="mt-1 text-sm text-red-600 font-medium">{errors.email.message}</p>
+        )}
       </div>
 
-      <div>
-        <label htmlFor="password">Пароль</label>
-        <input id="password" type="password" {...register("password")} className="input" />
-        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+      <div className="flex flex-col">
+        <label
+          htmlFor="password"
+          className="mb-2 font-semibold text-[#9A3F3F] text-lg"
+        >
+          Пароль
+        </label>
+        <input
+          id="password"
+          type="password"
+          {...register("password")}
+          className={`px-4 py-3 rounded border transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#9A3F3F] ${
+            errors.password ? "border-red-500" : "border-[#C1856D]"
+          }`}
+          placeholder="••••••••"
+          autoComplete="current-password"
+        />
+        {errors.password && (
+          <p className="mt-1 text-sm text-red-600 font-medium">{errors.password.message}</p>
+        )}
       </div>
 
-      <button type="submit" 
-      disabled={isSubmitting || registerMutation.isPending || loginMutation.isPending} 
-      className="btn">
-        {isSubmitting || registerMutation.isPending 
-        || loginMutation.isPending ? 
-        "Загрузка..." : 
-        "Зарегистрироваться"}
+      <button
+        type="submit"
+        disabled={isSubmitting || registerMutation.isPending || loginMutation.isPending}
+        className="w-full bg-[#9A3F3F] text-[#FBF9D1] py-3 rounded-md font-semibold shadow-md hover:bg-[#C1856D] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {isSubmitting || registerMutation.isPending || loginMutation.isPending
+          ? "Загрузка..."
+          : "Зарегистрироваться"}
       </button>
     </form>
+
   );
 }

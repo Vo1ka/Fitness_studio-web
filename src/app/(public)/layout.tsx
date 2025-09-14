@@ -1,8 +1,12 @@
+import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header";
+
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div>
-            {/* Тут может быть гостевой header/навигация */}
-            {children}
-        </div>
+        <>
+        <Header />
+            <main className="flex-grow">{children}</main>
+        <Footer></Footer>
+        </>
     );
 }
