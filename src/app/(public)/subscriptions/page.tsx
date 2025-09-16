@@ -2,6 +2,7 @@
 
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
+import { SubscriptionCard } from "@/components/SubscriptionCard/SubscriptionCard";
 import { useState } from "react";
 
 type Subscription = {
@@ -10,6 +11,8 @@ type Subscription = {
   description: string;
   durationMonths: number;
   price: number;
+  popular?: boolean;
+  features: string[];
 };
 
 const mockSubscriptions: Subscription[] = [
@@ -19,6 +22,11 @@ const mockSubscriptions: Subscription[] = [
     description: "Доступ к группе занятий и тренажёрному залу.",
     durationMonths: 1,
     price: 3000,
+    features: [
+      "Доступ к тренажёрному залу",
+      "Групповые занятия",
+      "Распорядок работы студии",
+    ],
   },
   {
     id: "sub2",
@@ -26,6 +34,12 @@ const mockSubscriptions: Subscription[] = [
     description: "Все базовые возможности + персональные тренировки 2 раза в месяц.",
     durationMonths: 3,
     price: 8000,
+    features: [
+      "Все из базового",
+      "2 персональные тренировки в месяц",
+      "Доступ к сауне",
+      "Приоритетное бронирование",
+    ],
   },
   {
     id: "sub3",
@@ -33,8 +47,17 @@ const mockSubscriptions: Subscription[] = [
     description: "Полный доступ ко всем услугам студии без ограничений.",
     durationMonths: 12,
     price: 16000,
+    popular: true,
+    features: [
+      "Безлимитный доступ ко всем залам",
+      "Персональные тренировки 4 раза в месяц",
+      "Эксклюзивные мастер-классы",
+      "Доступ к VIP-зоне",
+      "Персональный тренер и диетолог",
+    ],
   },
 ];
+
 
 export default function SubscriptionsPage() {
   const [subscriptions] = useState<Subscription[]>(mockSubscriptions);
@@ -48,19 +71,14 @@ export default function SubscriptionsPage() {
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {subscriptions.map((sub) => (
-          <div
-            key={sub.id}
-            className="bg-[#E6CFA9] rounded-lg p-6 shadow-md flex flex-col justify-between"
-          >
-            <h2 className="text-2xl font-semibold mb-2">{sub.title}</h2>
-            <p className="mb-4 flex-grow">{sub.description}</p>
-            <div className="text-lg font-bold">
-              Цена: ₽{sub.price} / {sub.durationMonths} мес.
-            </div>
-            <button className="mt-6 bg-[#9A3F3F] text-[#FBF9D1] py-2 rounded hover:bg-[#C1856D] transition-colors duration-300">
-              Купить
-            </button>
-          </div>
+          <SubscriptionCard key={sub.id}
+            title={sub.title}
+            description={sub.description}
+            durationMonths={sub.durationMonths}
+            price={sub.price}
+            popular={sub.popular}
+            features={sub.features}
+          />
         ))}
       </section>
     </main>
