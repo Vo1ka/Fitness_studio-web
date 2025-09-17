@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/app/lib/auth/useAuth";
 import { useLogin } from "@/app/lib/api/endpoints";
+import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Введите корректный email" }),
@@ -14,6 +15,7 @@ const loginSchema = z.object({
 type LoginForm = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  const router = useRouter()
   const { login } = useAuth();
   const {
     register,
@@ -35,7 +37,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <main className="min-h-[calc(100vh-8rem)] bg-[#FBF9D1] text-[#9A3F3F] flex flex-col items-center justify-center px-6 py-12">
+     <main className="min-h-[calc(100vh-8rem)] bg-[#FBF9D1] text-[#9A3F3F] flex flex-col items-center justify-center px-6 py-12">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="bg-[#E6CFA9] rounded-lg shadow-lg p-10 w-full max-w-md"
@@ -83,8 +85,20 @@ export default function LoginPage() {
           >
             {isSubmitting || mutation.isPending ? "Входим..." : "Войти"}
           </button>
+
+          <p className="mt-6 text-center text-[#9A3F3F]">
+            Нет аккаунта?{" "}
+            <button
+              type="button"
+              onClick={() => router.push("/register")}
+              className="font-semibold text-[#C1856D] hover:underline"
+            >
+              Зарегистрируйтесь!
+            </button>
+          </p>
         </form>
       </main>
+
     </>
   );
 

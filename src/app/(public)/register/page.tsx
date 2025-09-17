@@ -104,6 +104,18 @@ export default function RegisterPage() {
           ? "Загрузка..."
           : "Зарегистрироваться"}
       </button>
+
+      <p className="mt-6 text-center text-[#9A3F3F]">
+        Есть аккаунт?{" "}
+        <button
+          type="button"
+          onClick={() => router.push("/login")}
+          className="font-semibold text-[#C1856D] hover:underline"
+        >
+          Войти!
+        </button>
+      </p>
+
     </form>
 
   );

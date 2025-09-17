@@ -33,7 +33,7 @@ const Main = () => {
             Твоя студия для здоровья и силы. Запишись на занятия, тренируйся с лучшими тренерами и достигай целей!
           </p>
           <Link
-            href="/sessions"
+            href="/schedule"
             className="inline-block bg-[#9A3F3F] text-[#FBF9D1] px-8 py-3 rounded-md font-semibold shadow-md hover:bg-[#C1856D] transition-colors duration-300"
           >
             Посмотреть расписание
