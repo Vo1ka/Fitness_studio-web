@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/app/lib/auth/useAuth";
-import { useLogin, useRegister } from "@/app/lib/api/endpoints";
+import { useLogin, useRegister as useRegisterMutation} from "@/app/lib/api/endpoints";
 import { useRouter } from "next/navigation";
 
 export const registerSchema = z.object({
@@ -21,14 +21,16 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterForm>({ resolver: zodResolver(registerSchema) });
+  } = useForm<RegisterForm>({ resolver: zodResolver(registerSchema) }); //{ resolver: zodResolver(registerSchema) }
 
-  const registerMutation = useRegister();
+  const registerMutation = useRegisterMutation();
   const loginMutation = useLogin();
 
   const router = useRouter();
 
   const onSubmit = async (data: RegisterForm) => {
+      console.log("onSubmit called", data);
+
     try {
       await registerMutation.mutateAsync(data); // регистрация
 
@@ -52,6 +54,22 @@ export default function RegisterPage() {
       className="max-w-md mx-auto p-8 space-y-6 bg-[#E6CFA9] rounded-lg shadow-lg"
     >
       <div className="flex flex-col">
+      <label
+          htmlFor="name"
+          className="mb-2 font-semibold text-[#9A3F3F] text-lg"
+        >
+          Name
+        </label>
+        <input
+          id="name"
+          type="name"
+          {...register("name")}
+          className={`px-4 py-3 rounded border transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#9A3F3F] ${
+            errors.email ? "border-red-500" : "border-[#C1856D]"
+          }`}
+          placeholder="Nickname"
+          autoComplete="name"
+        />
         <label
           htmlFor="email"
           className="mb-2 font-semibold text-[#9A3F3F] text-lg"
