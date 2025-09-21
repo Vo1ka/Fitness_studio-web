@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/app/lib/auth/useAuth";
 import { useLogin } from "@/app/lib/api/endpoints";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Введите корректный email" }),
@@ -22,13 +23,14 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginForm>({ resolver: zodResolver(loginSchema) });
-
+  const [isLogging, setIsLogging] = useState<string>('')
   const mutation = useLogin();
   const onSubmit = async (data: LoginForm) => {
     try {
       const res = await mutation.mutateAsync(data);
       login(res.accessToken);
-      // Можно сделать редирект на главную или предыдущую страницу
+      setIsLogging('Вход...')
+      router.push('/bookings')
     } catch (err: any) {
       // Обработка ошибок API
       alert(err.message || "Ошибка входа");
@@ -83,7 +85,7 @@ export default function LoginPage() {
             disabled={isSubmitting || mutation.isPending}
             className="w-full bg-[#9A3F3F] text-[#FBF9D1] py-3 rounded font-semibold hover:bg-[#C1856D] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSubmitting || mutation.isPending ? "Входим..." : "Войти"}
+            {isLogging || mutation.isPending ? isLogging : "Войти"}
           </button>
 
           <p className="mt-6 text-center text-[#9A3F3F]">

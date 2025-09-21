@@ -19,7 +19,6 @@ export default function PrivateRouteProvider({ children }: PrivateRouteProviderP
   useEffect(() => {
     // Здесь можно получить токен из sessionStorage/localStorage или из контекста
     const token = sessionStorage.getItem("accessToken");
-
     if (!token) {
       router.replace("/login");
       return;
